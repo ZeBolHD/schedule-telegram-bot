@@ -1,4 +1,5 @@
 import { commandHandler } from "./helpers/commands/commandsHandler";
+import { selectGroup, showGroupsByFaculty } from "./helpers/groups";
 import { initialBot } from "./helpers/initialBot";
 import { setGroupToUser } from "./libs/db/actions";
 
@@ -12,22 +13,15 @@ const main = async () => {
   });
 
   bot.on("callback_query", async (ctx) => {
-    const groupCode = ctx.data;
+    const data = ctx.data.split(" ");
 
-    const userId = ctx.from.id;
-    const msg = ctx.message;
-    const opts = {
-      chat_id: msg!.chat.id,
-      message_id: msg!.message_id,
-    };
-
-    if (!groupCode) {
-      return;
+    if (data[0] === "selected_faculty") {
+      showGroupsByFaculty(bot, ctx);
     }
 
-    setGroupToUser(userId, +groupCode);
-
-    bot.editMessageText(`Вы выбрали группу: ${groupCode}`, opts);
+    if (data[0] === "selected_group") {
+      selectGroup(bot, ctx);
+    }
   });
 };
 

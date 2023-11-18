@@ -35,6 +35,29 @@ export const getAllGroups = async () => {
   }));
 };
 
+export const getAllFaculties = async () => {
+  const faculties = await prisma.faculty.findMany();
+
+  return faculties;
+};
+
+export const getGroupsByFaculty = async (faculty: number) => {
+  return (
+    await prisma.group.findMany({
+      where: {
+        facultyId: faculty,
+      },
+      include: {
+        faculty: true,
+      },
+    })
+  ).map((group) => ({
+    id: group.id,
+    code: group.code,
+    faculty: group.faculty.name,
+  }));
+};
+
 export const setGroupToUser = async (userId: number, groupId: number) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -47,7 +70,7 @@ export const setGroupToUser = async (userId: number, groupId: number) => {
   }
 
   if (user.groupIds.indexOf(groupId) === -1) {
-    await prisma.user.update({
+    const data = await prisma.user.update({
       where: {
         id: userId,
       },
@@ -56,8 +79,32 @@ export const setGroupToUser = async (userId: number, groupId: number) => {
           push: groupId,
         },
       },
+      include: {
+        groups: true,
+      },
     });
+
+    const code = await prisma.group.findUnique({
+      where: {
+        id: groupId,
+      },
+      select: {
+        code: true,
+      },
+    });
+
+    return code;
   }
+};
+
+export const getGroupById = async (groupId: number) => {
+  const group = await prisma.group.findUnique({
+    where: {
+      id: groupId,
+    },
+  });
+
+  return group;
 };
 
 export const getAllUserGroups = async (userId: number) => {
