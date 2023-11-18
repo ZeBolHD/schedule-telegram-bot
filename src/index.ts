@@ -1,5 +1,6 @@
+import { commandHandler } from "./helpers/commands/commandsHandler";
 import { initialBot } from "./helpers/initialBot";
-import { checkUserInDB, createUser } from "./libs/db/actions";
+import { setGroupToUser } from "./libs/db/actions";
 
 const bot = initialBot();
 
@@ -7,18 +8,26 @@ console.log("bot is running...");
 
 const main = async () => {
   bot.on("message", async (ctx) => {
-    const message = ctx.text as string;
+    commandHandler(bot, ctx);
+  });
 
-    if (message === "/start") {
-      const user = await checkUserInDB(ctx);
+  bot.on("callback_query", async (ctx) => {
+    const groupCode = ctx.data;
 
-      if (!user) {
-        await createUser(ctx);
-        bot.sendMessage(ctx.chat.id, "Вы зарегистрировались в боте");
-      } else {
-        bot.sendMessage(ctx.chat.id, "Вы уже зарегистрированы");
-      }
+    const userId = ctx.from.id;
+    const msg = ctx.message;
+    const opts = {
+      chat_id: msg!.chat.id,
+      message_id: msg!.message_id,
+    };
+
+    if (!groupCode) {
+      return;
     }
+
+    setGroupToUser(userId, +groupCode);
+
+    bot.editMessageText(`Вы выбрали группу: ${groupCode}`, opts);
   });
 };
 

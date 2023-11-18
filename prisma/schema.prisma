@@ -11,8 +11,34 @@ datasource db {
 }
 
 model User {
-  id               Int @id
+  id               Int @id @unique
   first_name        String?
-  username         String
+  username         String?
   createdAt        DateTime @default(now())
+  groupIds         Int[]
+  groups           Group[]
+  subscriptionIds  String[]
+  subscriptions    Subscription[]
+}
+
+model Group {
+  id              Int @id @default(autoincrement()) @unique
+  code            String
+  facultyId       Int
+  faculty         Faculty @relation(fields: [facultyId], references: [id])
+  studyType       Int
+
+  users           User[]
+}
+
+model Faculty {
+  id              Int @id @default(autoincrement())
+  name            String
+  groups          Group[]
+}
+
+model Subscription {
+  id              Int @id
+  name            String
+  users           User[]
 }
