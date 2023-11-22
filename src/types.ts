@@ -1,5 +1,5 @@
 export type User = {
   userId: number;
-  userLastName: string | null;
+  userFirstName: string | null;
   username: string | null;
 };

@@ -1,12 +1,14 @@
 import prisma from "./prismadb";
-import { User } from "../types";
+import { User } from "../../types";
 
 export const createUser = async (user: User) => {
+  const { userId, userFirstName, username } = user;
+
   await prisma.user.create({
     data: {
-      id: user.userId,
-      first_name: user.userLastName,
-      username: user.username,
+      id: userId,
+      first_name: userFirstName,
+      username: username,
     },
   });
 };
@@ -58,43 +60,18 @@ export const getGroupsByFaculty = async (faculty: number) => {
   }));
 };
 
-export const setGroupToUser = async (userId: number, groupId: number) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
+export const setUserWithGroup = async (userId: number, groupId: number) => {
+  const { group } = await prisma.userWithGroup.create({
+    data: {
+      userId,
+      groupId,
+    },
+    include: {
+      group: true,
     },
   });
 
-  if (!user) {
-    return;
-  }
-
-  if (user.groupIds.indexOf(groupId) === -1) {
-    const data = await prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        groupIds: {
-          push: groupId,
-        },
-      },
-      include: {
-        groups: true,
-      },
-    });
-
-    const code = await prisma.group.findUnique({
-      where: {
-        id: groupId,
-      },
-      select: {
-        code: true,
-      },
-    });
-
-    return code;
-  }
+  return group;
 };
 
 export const getGroupById = async (groupId: number) => {
@@ -108,24 +85,20 @@ export const getGroupById = async (groupId: number) => {
 };
 
 export const getAllUserGroups = async (userId: number) => {
-  const user = await prisma.user.findUnique({
+  const userGroups = await prisma.userWithGroup.findMany({
     where: {
-      id: userId,
-    },
-  });
-
-  const groups = await prisma.group.findMany({
-    where: {
-      id: {
-        in: user!.groupIds,
-      },
+      userId: userId,
     },
     include: {
-      faculty: true,
+      group: {
+        include: {
+          faculty: true,
+        },
+      },
     },
   });
 
-  return groups.map((group) => ({
+  return userGroups.map(({ group }) => ({
     id: group.id,
     code: group.code,
     faculty: group.faculty.name,

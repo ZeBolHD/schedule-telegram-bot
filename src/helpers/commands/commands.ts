@@ -1,6 +1,6 @@
 import TelegramBot from "node-telegram-bot-api";
 import { checkUserInDB, createUser } from "../../libs/db/actions";
-import { User } from "../../libs/types";
+import { User } from "../../types";
 
 type Command = { command: string; description: string };
 
@@ -25,14 +25,18 @@ export const setCommandsToBot = (bot: TelegramBot) => {
 
 export const startCommand = async (
   bot: TelegramBot,
-  { userId, userLastName, username }: User
+  { userId, userFirstName, username }: User
 ) => {
+  if (!userId || !userFirstName || !username) {
+    return;
+  }
+
   const user = await checkUserInDB(userId);
 
   if (!user) {
     const user = {
       userId,
-      userLastName,
+      userFirstName,
       username,
     };
     await createUser(user);

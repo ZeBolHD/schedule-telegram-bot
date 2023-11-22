@@ -1,7 +1,7 @@
 import TelegramBot from "node-telegram-bot-api";
 import { selectFaculty, showSelectedGroups } from "../groups";
 import { startCommand } from "./commands";
-import { parseUserData } from "../parse";
+import { parseUserData } from "../parseUserData";
 
 export const commandHandler = async (
   bot: TelegramBot,

@@ -1,10 +1,9 @@
 import TelegramBot from "node-telegram-bot-api";
 import {
   getAllFaculties,
-  getAllGroups,
   getAllUserGroups,
   getGroupsByFaculty,
-  setGroupToUser,
+  setUserWithGroup,
 } from "../libs/db/actions";
 
 export const selectFaculty = async (
@@ -37,7 +36,7 @@ export const selectGroup = async (
   const userId = ctx.from.id;
   const msg = ctx.message;
 
-  const group = await setGroupToUser(userId, groupId);
+  const group = await setUserWithGroup(userId, groupId);
   const options = {
     chat_id: userId,
     message_id: msg!.message_id,

@@ -11,34 +11,51 @@ datasource db {
 }
 
 model User {
-  id               Int @id @unique
-  first_name        String?
-  username         String?
-  createdAt        DateTime @default(now())
-  groupIds         Int[]
-  groups           Group[]
-  subscriptionIds  String[]
-  subscriptions    Subscription[]
+  id                    Int @id @unique
+  first_name             String?
+  username              String?
+  createdAt             DateTime @default(now())
+
+  userWithGroup         UserWithGroup[]
+  userWithSubscription  UserWithSubscription[]
+}
+
+model UserWithGroup {
+  userId                Int
+  user                  User @relation(fields: [userId], references: [id])
+  groupId               Int
+  group                 Group @relation(fields: [groupId], references: [id])
+
+  @@id([userId, groupId])
 }
 
 model Group {
-  id              Int @id @default(autoincrement()) @unique
-  code            String
-  facultyId       Int
-  faculty         Faculty @relation(fields: [facultyId], references: [id])
-  studyType       Int
+  id                    Int @id @default(autoincrement()) @unique
+  code                  String
+  facultyId             Int
+  faculty               Faculty @relation(fields: [facultyId], references: [id])
+  studyType             Int
 
-  users           User[]
+  userWithGroup         UserWithGroup[]
+}
+
+model UserWithSubscription {
+  userId                Int
+  user                  User @relation(fields: [userId], references: [id])
+  subscriptionId        Int
+  subscription          Subscription @relation(fields: [subscriptionId], references: [id])
+
+  @@id([userId, subscriptionId])
 }
 
 model Faculty {
-  id              Int @id @default(autoincrement())
-  name            String
-  groups          Group[]
+  id                    Int @id @default(autoincrement())
+  name                  String
+  groups                Group[]
 }
 
 model Subscription {
-  id              Int @id
-  name            String
-  users           User[]
+  id                    Int @id @default(autoincrement())
+  name                  String
+  userWithSubscription  UserWithSubscription[]
 }

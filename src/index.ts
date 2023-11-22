@@ -1,7 +1,6 @@
 import { commandHandler } from "./helpers/commands/commandsHandler";
 import { selectGroup, showGroupsByFaculty } from "./helpers/groups";
 import { initialBot } from "./helpers/initialBot";
-import { setGroupToUser } from "./libs/db/actions";
 
 const bot = initialBot();
 
