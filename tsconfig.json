@@ -13,10 +13,10 @@
     "isolatedModules": true,
     "baseUrl": ".",
     "outDir": "build",
-    "noEmit": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "noEmit": true
+    // "paths": {
+    //   "@/*": ["./src/*"]
+    // }
   },
   "exclude": ["node_modules", "build"],
   "include": ["**/**/*.ts"]

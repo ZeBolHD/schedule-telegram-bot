@@ -1,22 +1,29 @@
 import TelegramBot from "node-telegram-bot-api";
-import { selectFaculty, showSelectedGroups } from "../groups";
-import { startCommand } from "./commands";
 import { parseUserData } from "../parseUserData";
+import { start } from "./start";
+import { selectGroup } from "./selectGroup";
+import { showSelectedGroups } from "./showSelectedGroups";
 
 export const commandHandler = async (
   bot: TelegramBot,
   ctx: TelegramBot.Message
 ) => {
   const message = ctx.text;
-  const user = parseUserData(ctx);
 
-  if (message === "/start") {
-    startCommand(bot, user);
-  } else if (message === "/select_group") {
-    selectFaculty(bot, ctx);
-  } else if (message === "/my_groups") {
-    showSelectedGroups(bot, user.userId);
-  } else {
-    bot.sendMessage(ctx.chat.id, "Такой команды нет");
+  switch (message) {
+    case "/start":
+      start(ctx);
+      break;
+
+    case "/select_group":
+      selectGroup(ctx);
+      break;
+
+    case "/my_groups":
+      showSelectedGroups(ctx);
+      break;
+
+    default:
+      bot.sendMessage(ctx.chat.id, "Такой команды нет");
   }
 };

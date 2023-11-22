@@ -1,10 +1,9 @@
+import { callbackQueryHandler } from "./helpers/callbackQueries/callbackQueryHandler";
 import { commandHandler } from "./helpers/commands/commandsHandler";
 import { selectGroup, showGroupsByFaculty } from "./helpers/groups";
-import { initialBot } from "./helpers/initialBot";
+import { initialBot } from "./libs/initialBot";
 
-const bot = initialBot();
-
-console.log("bot is running...");
+export const bot = initialBot();
 
 const main = async () => {
   bot.on("message", async (ctx) => {
@@ -12,15 +11,7 @@ const main = async () => {
   });
 
   bot.on("callback_query", async (ctx) => {
-    const data = ctx.data.split(" ");
-
-    if (data[0] === "selected_faculty") {
-      showGroupsByFaculty(bot, ctx);
-    }
-
-    if (data[0] === "selected_group") {
-      selectGroup(bot, ctx);
-    }
+    callbackQueryHandler(bot, ctx);
   });
 };
 

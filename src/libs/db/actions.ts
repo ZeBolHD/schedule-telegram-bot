@@ -61,6 +61,22 @@ export const getGroupsByFaculty = async (faculty: number) => {
 };
 
 export const setUserWithGroup = async (userId: number, groupId: number) => {
+  const userWithGroup = await prisma.userWithGroup.findFirst({
+    where: {
+      userId: userId,
+      groupId: groupId,
+    },
+
+    include: {
+      group: true,
+    },
+  });
+
+  if (userWithGroup) {
+    const { group } = userWithGroup;
+    return group;
+  }
+
   const { group } = await prisma.userWithGroup.create({
     data: {
       userId,
@@ -103,4 +119,13 @@ export const getAllUserGroups = async (userId: number) => {
     code: group.code,
     faculty: group.faculty.name,
   }));
+};
+
+export const deleteUserWithGroup = async (userId: number, groupId: number) => {
+  await prisma.userWithGroup.deleteMany({
+    where: {
+      userId: userId,
+      groupId: groupId,
+    },
+  });
 };
