@@ -17,12 +17,16 @@ export const selectGroupGradeHandler = async (
   const groups = await getGroupsByFacultyIdAndGrade(facultyId, grade);
 
   const reply_markup: TelegramBot.InlineKeyboardMarkup = {
-    inline_keyboard: groups.map((group) => [
-      {
-        text: group.code,
-        callback_data: `${CallbackQuery.SELECT_GROUP}/${SelectGroupQuery.GROUP}/${group.id}`,
-      },
-    ]),
+    inline_keyboard: groups.map((group) => {
+      const query = `${CallbackQuery.SELECT_GROUP}/${SelectGroupQuery.GROUP}/${group.id}`;
+
+      return [
+        {
+          text: group.code,
+          callback_data: query,
+        },
+      ];
+    }),
   };
 
   editMessage("Выберите группу:", userId, message_id, reply_markup);
