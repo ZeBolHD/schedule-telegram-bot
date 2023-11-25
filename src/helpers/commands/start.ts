@@ -19,8 +19,9 @@ export const start = async (ctx: TelegramBot.Message) => {
       username,
     };
     await createUser(user);
-    sendMessage(userId, "Вы зарегистрировались в боте");
-  } else {
-    sendMessage(userId, "Вы уже зарегистрированы");
+    sendMessage(
+      userId,
+      "Привет! Чтобы подписаться на рассылку, выберите группу при помощи команды: /select_group"
+    );
   }
 };

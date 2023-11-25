@@ -34,8 +34,8 @@ model Group {
   code                  String
   facultyId             Int
   faculty               Faculty @relation(fields: [facultyId], references: [id])
-  grade                 Int
-  studyType             Int
+  grade                 Int @default(1)
+  studyType             Int @default(0)
   
   userWithGroup         UserWithGroup[]
 }

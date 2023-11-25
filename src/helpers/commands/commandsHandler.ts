@@ -1,5 +1,4 @@
 import TelegramBot from "node-telegram-bot-api";
-import { parseUserData } from "../parseUserData";
 import { start } from "./start";
 import { selectGroup } from "./selectGroup";
 import { showSelectedGroups } from "./showSelectedGroups";

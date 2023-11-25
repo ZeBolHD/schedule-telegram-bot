@@ -1,26 +1,20 @@
 import TelegramBot from "node-telegram-bot-api";
-import { selectGroup, showGroupsByFaculty } from "../groups";
-import { parseUserData } from "../parseUserData";
-import { deleteUserGroup } from "./deleteUserGroup";
+import { CallbackQuery } from "./types";
+import { selectGroupQueryHandler } from "./selectGroup/selectGroupQueryHandler";
 
 export const callbackQueryHandler = async (
   bot: TelegramBot,
   ctx: TelegramBot.CallbackQuery
 ) => {
-  const data = ctx.data.split(" ");
+  const query = ctx.data.split("/");
 
-  const type = data[0];
+  const type = query[0];
+
+  query.shift();
 
   switch (type) {
-    case "selected_faculty":
-      showGroupsByFaculty(ctx);
+    case CallbackQuery.SELECT_GROUP:
+      selectGroupQueryHandler(query, ctx);
       break;
-
-    case "selected_group":
-      selectGroup(ctx);
-      break;
-
-    case "deleted_group":
-      await deleteUserGroup(ctx);
   }
 };

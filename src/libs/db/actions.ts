@@ -129,3 +129,32 @@ export const deleteUserWithGroup = async (userId: number, groupId: number) => {
     },
   });
 };
+
+export const getGradesByFacultyId = async (facultyId: number) => {
+  const groups = await prisma.group.findMany({
+    where: {
+      facultyId: facultyId,
+    },
+    select: {
+      grade: true,
+    },
+  });
+  const set = new Set(groups.map((group) => group.grade));
+  const grades = [...set];
+
+  return grades;
+};
+
+export const getGroupsByFacultyIdAndGrade = async (
+  facultyId: number,
+  grade: number
+) => {
+  const groups = await prisma.group.findMany({
+    where: {
+      facultyId: facultyId,
+      grade: grade,
+    },
+  });
+
+  return groups;
+};
