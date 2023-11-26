@@ -4,10 +4,6 @@ type Command = { command: string; description: string };
 
 export const commands: Command[] = [
   {
-    command: "/start",
-    description: "Зарегистрироваться в боте",
-  },
-  {
     command: "/select_group",
     description: "Выбрать группу",
   },

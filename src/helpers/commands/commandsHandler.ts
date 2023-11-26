@@ -2,12 +2,12 @@ import TelegramBot from "node-telegram-bot-api";
 import { start } from "./start";
 import { selectGroup } from "./selectGroup";
 import { showSelectedGroups } from "./showSelectedGroups";
+import { parseUserData } from "../parseUserData";
+import { sendMessage } from "../../libs/sendMessage";
 
-export const commandHandler = async (
-  bot: TelegramBot,
-  ctx: TelegramBot.Message
-) => {
+export const commandHandler = async (ctx: TelegramBot.Message) => {
   const message = ctx.text;
+  const { userId } = parseUserData(ctx);
 
   switch (message) {
     case "/start":
@@ -23,6 +23,6 @@ export const commandHandler = async (
       break;
 
     default:
-      bot.sendMessage(ctx.chat.id, "Такой команды нет");
+      sendMessage(userId, "Такой команды нет");
   }
 };

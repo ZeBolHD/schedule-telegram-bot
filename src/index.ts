@@ -6,11 +6,11 @@ export const bot = initialBot();
 
 const main = async () => {
   bot.on("message", async (ctx) => {
-    commandHandler(bot, ctx);
+    commandHandler(ctx);
   });
 
   bot.on("callback_query", async (ctx) => {
-    callbackQueryHandler(bot, ctx);
+    callbackQueryHandler(ctx);
   });
 };
 
