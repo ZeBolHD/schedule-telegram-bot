@@ -1,12 +1,13 @@
 import TelegramBot from "node-telegram-bot-api";
 import { CallbackQuery } from "./types";
 import { selectGroupQueryHandler } from "./selectGroup/selectGroupQueryHandler";
+import { parseCallbackQueryData } from "../../libs/parseCallbackQueryData";
 
 export const callbackQueryHandler = async (
   bot: TelegramBot,
   ctx: TelegramBot.CallbackQuery
 ) => {
-  const query = ctx.data.split("/");
+  const { query } = parseCallbackQueryData(ctx);
 
   const type = query[0];
 

@@ -5,14 +5,14 @@ import { SelectGroupQuery } from "./types";
 import { parseUserData } from "../../parseUserData";
 import { getGroupsByFacultyIdAndGrade } from "../../../libs/db/actions";
 import { editMessage } from "../../../libs/editMessage";
+import { parseCallbackQueryData } from "../../../libs/parseCallbackQueryData";
 
 export const selectGroupGradeHandler = async (
   facultyId: number,
   grade: number,
   ctx: TelegramBot.CallbackQuery
 ) => {
-  const { userId } = parseUserData(ctx);
-  const message_id = ctx.message.message_id;
+  const { userId, messageId } = parseCallbackQueryData(ctx);
 
   const groups = await getGroupsByFacultyIdAndGrade(facultyId, grade);
 
@@ -29,7 +29,5 @@ export const selectGroupGradeHandler = async (
     }),
   };
 
-  editMessage("Выберите группу:", userId, message_id, reply_markup);
-
-  // const query = `${CallbackQuery.SELECT_GROUP}/${SelectGroupQuery.GROUP}/`;
+  editMessage("Выберите группу:", userId, messageId, reply_markup);
 };

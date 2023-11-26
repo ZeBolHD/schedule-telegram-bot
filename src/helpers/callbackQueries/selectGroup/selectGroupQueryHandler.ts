@@ -12,8 +12,8 @@ export const selectGroupQueryHandler = (
 
   switch (type) {
     case SelectGroupQuery.FACULTY: {
-      const facultyId = Number(query[1]);
-      selectGroupFacultyHandler(facultyId, ctx);
+      query.slice(1);
+      selectGroupFacultyHandler(query, ctx);
       break;
     }
 
