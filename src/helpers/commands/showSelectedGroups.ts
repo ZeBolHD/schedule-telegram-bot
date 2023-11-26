@@ -6,26 +6,29 @@ import { editMessage } from "../../libs/editMessage";
 
 export const showSelectedGroups = async (
   ctx: TelegramBot.Message | TelegramBot.CallbackQuery,
-  message_id?: number
+  messageId?: number
 ) => {
   const { userId } = parseUserData(ctx);
 
   const groups = await getAllUserGroups(userId);
 
   const reply_markup = {
-    inline_keyboard: groups.map((group) => [
-      {
-        text: group.code + " ❌",
-        callback_data: `deleted_group ${group.id}`,
-      },
-    ]),
+    inline_keyboard: groups.map((group) => {
+      const query = `delete_group/${group.id}`;
+      return [
+        {
+          text: group.code + " ❌",
+          callback_data: query,
+        },
+      ];
+    }),
   };
 
-  if (message_id) {
+  if (messageId) {
     editMessage(
       "Ваши группы:\nНажмите на группу для удаления",
       userId,
-      message_id,
+      messageId,
       reply_markup
     );
 

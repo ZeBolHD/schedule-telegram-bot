@@ -3,12 +3,14 @@ import { parseUserData } from "../parseUserData";
 import { deleteUserWithGroup } from "../../libs/db/actions";
 
 import { showSelectedGroups } from "../commands/showSelectedGroups";
+import { parseCallbackQueryData } from "../../libs/parseCallbackQueryData";
 
-export const deleteUserGroup = async (ctx: TelegramBot.CallbackQuery) => {
-  const data = ctx.data.split(" ");
-  const groupId = Number(data[1]);
-  const { userId } = parseUserData(ctx);
-  const messageId = ctx.message.message_id;
+export const deleteGroupHandler = async (
+  query: string,
+  ctx: TelegramBot.CallbackQuery
+) => {
+  const groupId = Number(query);
+  const { userId, messageId } = parseCallbackQueryData(ctx);
 
   await deleteUserWithGroup(userId, groupId);
 
