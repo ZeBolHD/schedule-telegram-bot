@@ -13,21 +13,47 @@ export const showSelectedGroups = async (
   const groups = await getAllUserGroups(userId);
 
   const reply_markup = {
-    inline_keyboard: groups.map((group) => {
-      const query = `delete_group/${group.id}`;
-      return [
-        {
-          text: group.code + " ❌",
-          callback_data: query,
-        },
-      ];
-    }),
+    inline_keyboard: groups
+      .map((group) => {
+        const query = `delete_group/${group.id}`;
+        return [
+          {
+            text: group.code + " ❌",
+            callback_data: query,
+          },
+        ];
+      })
+      .concat([
+        [
+          {
+            text: "Получить расписание",
+            callback_data: "фывфа",
+          },
+        ],
+      ]),
   };
+
+  if (groups.length === 0 && messageId) {
+    editMessage(
+      userId,
+      "Вы не выбрали ни одну группу. Выбрать группу: /select_group",
+      messageId
+    );
+    return;
+  }
+
+  if (groups.length === 0) {
+    sendMessage(
+      userId,
+      "Вы не выбрали ни одну группу. Выбрать группу: /select_group"
+    );
+    return;
+  }
 
   if (messageId) {
     editMessage(
-      "Ваши группы:\nНажмите на группу для удаления",
       userId,
+      "Ваши группы:\nНажмите на группу для удаления",
       messageId,
       reply_markup
     );

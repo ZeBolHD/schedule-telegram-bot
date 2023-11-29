@@ -29,5 +29,5 @@ export const selectGroupGradeHandler = async (
     }),
   };
 
-  editMessage("Выберите группу:", userId, messageId, reply_markup);
+  editMessage(userId, "Выберите группу:", messageId, reply_markup);
 };

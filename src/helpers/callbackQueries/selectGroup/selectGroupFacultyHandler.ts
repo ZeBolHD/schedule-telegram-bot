@@ -37,5 +37,5 @@ export const selectGroupFacultyHandler = async (
     }),
   };
 
-  editMessage("Выберите курс:", userId, messageId, reply_markup);
+  editMessage(userId, "Выберите курс:", messageId, reply_markup);
 };

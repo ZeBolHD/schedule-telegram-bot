@@ -23,41 +23,10 @@ export const checkUserInDB = async (userId: number) => {
   return userInDB ? true : false;
 };
 
-export const getAllGroups = async () => {
-  return (
-    await prisma.group.findMany({
-      include: {
-        faculty: true,
-      },
-    })
-  ).map((group) => ({
-    id: group.id,
-    code: group.code,
-    faculty: group.faculty.name,
-  }));
-};
-
 export const getAllFaculties = async () => {
   const faculties = await prisma.faculty.findMany();
 
   return faculties;
-};
-
-export const getGroupsByFaculty = async (faculty: number) => {
-  return (
-    await prisma.group.findMany({
-      where: {
-        facultyId: faculty,
-      },
-      include: {
-        faculty: true,
-      },
-    })
-  ).map((group) => ({
-    id: group.id,
-    code: group.code,
-    faculty: group.faculty.name,
-  }));
 };
 
 export const setUserWithGroup = async (userId: number, groupId: number) => {
@@ -138,6 +107,9 @@ export const getGradesByFacultyId = async (facultyId: number) => {
     select: {
       grade: true,
     },
+    orderBy: {
+      grade: "asc",
+    },
   });
   const set = new Set(groups.map((group) => group.grade));
   const grades = [...set];
@@ -157,4 +129,26 @@ export const getGroupsByFacultyIdAndGrade = async (
   });
 
   return groups;
+};
+
+export const getUserSubscriptionsById = async (userId: number) => {
+  const userWithSubscriptions = await prisma.userWithSubscription.findMany({
+    where: {
+      userId: userId,
+    },
+    select: {
+      subscription: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
+
+  const subscriptions = userWithSubscriptions.map(
+    (userWithSubscription) => userWithSubscription.subscription
+  );
+
+  return subscriptions;
 };

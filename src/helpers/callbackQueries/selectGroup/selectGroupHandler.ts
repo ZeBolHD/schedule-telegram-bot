@@ -12,5 +12,5 @@ export const selectGroupHandler = async (
 
   const group = await setUserWithGroup(userId, groupId);
 
-  editMessage(`Вы выбрали группу: ${group.code}`, userId, messageId);
+  editMessage(userId, `Вы выбрали группу: ${group.code}`, messageId);
 };

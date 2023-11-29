@@ -1,15 +1,17 @@
 import TelegramBot from "node-telegram-bot-api";
+
 import { start } from "./start";
 import { selectGroup } from "./selectGroup";
 import { showSelectedGroups } from "./showSelectedGroups";
 import { parseUserData } from "../parseUserData";
 import { sendMessage } from "../../libs/sendMessage";
+import { showSubscriptions } from "./showSubscriptions";
 
 export const commandHandler = async (ctx: TelegramBot.Message) => {
-  const message = ctx.text;
+  const type = ctx.text;
   const { userId } = parseUserData(ctx);
 
-  switch (message) {
+  switch (type) {
     case "/start":
       start(ctx);
       break;
@@ -20,6 +22,10 @@ export const commandHandler = async (ctx: TelegramBot.Message) => {
 
     case "/my_groups":
       showSelectedGroups(ctx);
+      break;
+
+    case "/my_subscriptions":
+      showSubscriptions(ctx);
       break;
 
     default:
