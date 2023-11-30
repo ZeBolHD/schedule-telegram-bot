@@ -11,6 +11,10 @@ export const commands: Command[] = [
     command: "/my_groups",
     description: "Мои группы",
   },
+  {
+    command: "/my_subscriptions",
+    description: "Мои подписки",
+  },
 ];
 
 export const setCommandsToBot = (bot: TelegramBot) => {

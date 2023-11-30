@@ -1,8 +1,10 @@
 import TelegramBot from "node-telegram-bot-api";
 import { CallbackQuery } from "./types";
-import { selectGroupQueryHandler } from "./selectGroup/selectGroupQueryHandler";
+import { selectGroupQueryHandler } from "./group/selectGroup/selectGroupQueryHandler";
 import { parseCallbackQueryData } from "../../libs/parseCallbackQueryData";
-import { deleteGroupHandler } from "./deleteGroupHandler";
+import { deleteGroupHandler } from "./group/deleteGroupHandler";
+import { selectSubscriptionHandler } from "./subscription/selectSubscriptionHandler";
+import { deleteSubscriptionHandler } from "./subscription/deleteSubscriptionHandler";
 
 export const callbackQueryHandler = async (ctx: TelegramBot.CallbackQuery) => {
   const { query } = parseCallbackQueryData(ctx);
@@ -19,6 +21,15 @@ export const callbackQueryHandler = async (ctx: TelegramBot.CallbackQuery) => {
 
     case CallbackQuery.DELETE_GROUP: {
       deleteGroupHandler(query[0], ctx);
+      break;
+    }
+
+    case CallbackQuery.SELECT_SUBSCRIPTION:
+      selectSubscriptionHandler(query[0], ctx);
+      break;
+
+    case CallbackQuery.DELETE_SUBSCRIPTION: {
+      deleteSubscriptionHandler(query[0], ctx);
       break;
     }
   }

@@ -1,11 +1,11 @@
 import TelegramBot from "node-telegram-bot-api";
 
-import { CallbackQuery } from "../types";
+import { CallbackQuery } from "../../types";
 import { SelectGroupQuery } from "./types";
-import { getGradesByFacultyId } from "../../../libs/db/actions";
-import { editMessage } from "../../../libs/editMessage";
+import { getGradesByFacultyId } from "../../../../libs/db/actions";
+import { editMessage } from "../../../../libs/editMessage";
 import { selectGroupGradeHandler } from "./selectGroupGradeHandler";
-import { parseCallbackQueryData } from "../../../libs/parseCallbackQueryData";
+import { parseCallbackQueryData } from "../../../../libs/parseCallbackQueryData";
 
 export const selectGroupFacultyHandler = async (
   query: string[],
@@ -26,7 +26,7 @@ export const selectGroupFacultyHandler = async (
 
   const reply_markup: TelegramBot.InlineKeyboardMarkup = {
     inline_keyboard: grades.map((grade) => {
-      const query = `${CallbackQuery.SELECT_GROUP}/${SelectGroupQuery.GRADE}/${facultyId}&${grade}`;
+      const query = `${CallbackQuery.SELECT_GROUP}/${SelectGroupQuery.FACULTY}/${facultyId}/${SelectGroupQuery.GRADE}/${grade}`;
 
       return [
         {

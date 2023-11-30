@@ -17,14 +17,6 @@ export const selectGroupQueryHandler = (
       break;
     }
 
-    case SelectGroupQuery.GRADE: {
-      const gradeAndFacultyId = query[1].split("&");
-      const facultyId = Number(gradeAndFacultyId[0]);
-      const grade = Number(gradeAndFacultyId[1]);
-      selectGroupGradeHandler(facultyId, grade, ctx);
-      break;
-    }
-
     case SelectGroupQuery.GROUP: {
       const groupId = Number(query[1]);
       selectGroupHandler(groupId, ctx);

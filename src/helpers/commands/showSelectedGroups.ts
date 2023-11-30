@@ -3,6 +3,7 @@ import { sendMessage } from "../../libs/sendMessage";
 import TelegramBot from "node-telegram-bot-api";
 import { parseUserData } from "../parseUserData";
 import { editMessage } from "../../libs/editMessage";
+import { CallbackQuery } from "../callbackQueries/types";
 
 export const showSelectedGroups = async (
   ctx: TelegramBot.Message | TelegramBot.CallbackQuery,
@@ -15,7 +16,7 @@ export const showSelectedGroups = async (
   const reply_markup = {
     inline_keyboard: groups
       .map((group) => {
-        const query = `delete_group/${group.id}`;
+        const query = `${CallbackQuery.DELETE_GROUP}/${group.id}`;
         return [
           {
             text: group.code + " ❌",

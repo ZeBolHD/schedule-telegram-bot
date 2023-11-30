@@ -4,8 +4,13 @@ import { getUserSubscriptionsById } from "../../libs/db/actions";
 import { sendMessage } from "../../libs/sendMessage";
 import { Subscriptions } from "./types";
 import { Subscription } from "@prisma/client";
+import { CallbackQuery } from "../callbackQueries/types";
+import { editMessage } from "../../libs/editMessage";
 
-export const showSubscriptions = async (ctx: TelegramBot.Message) => {
+export const showSubscriptions = async (
+  ctx: TelegramBot.Message | TelegramBot.CallbackQuery,
+  messageId?: number
+) => {
   const { userId } = parseUserData(ctx);
   const userSubscriptions = await getUserSubscriptionsById(userId);
 
@@ -21,9 +26,11 @@ export const showSubscriptions = async (ctx: TelegramBot.Message) => {
 
       const text = `${subscription.name}   ${isSelected ? "✅" : "❌"}`;
 
-      const query = `${isSelected ? "delete_subscription" : "select_group"}/${
-        subscription.id
-      }`;
+      const query = `${
+        isSelected
+          ? CallbackQuery.DELETE_SUBSCRIPTION
+          : CallbackQuery.SELECT_SUBSCRIPTION
+      }/${subscription.id}`;
 
       return [
         {
@@ -33,6 +40,11 @@ export const showSubscriptions = async (ctx: TelegramBot.Message) => {
       ];
     }),
   };
+
+  if (messageId) {
+    editMessage(userId, "Ваши подписки:", messageId, reply_markup);
+    return;
+  }
 
   sendMessage(userId, "Ваши подписки:", reply_markup);
 };

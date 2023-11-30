@@ -152,3 +152,47 @@ export const getUserSubscriptionsById = async (userId: number) => {
 
   return subscriptions;
 };
+
+export const setUserWithSubscription = async (
+  userId: number,
+  subscriptionId: number
+) => {
+  const userWithSubscription = await prisma.userWithSubscription.findFirst({
+    where: {
+      userId: userId,
+      subscriptionId: subscriptionId,
+    },
+    include: {
+      subscription: true,
+    },
+  });
+
+  if (userWithSubscription) {
+    const { subscription } = userWithSubscription;
+    return subscription;
+  }
+
+  const { subscription } = await prisma.userWithSubscription.create({
+    data: {
+      userId,
+      subscriptionId,
+    },
+    include: {
+      subscription: true,
+    },
+  });
+
+  return subscription;
+};
+
+export const deleteUserWithSubscription = async (
+  userId: number,
+  subscriptionId: number
+) => {
+  await prisma.userWithSubscription.deleteMany({
+    where: {
+      userId: userId,
+      subscriptionId: subscriptionId,
+    },
+  });
+};
