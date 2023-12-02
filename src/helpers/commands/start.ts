@@ -23,5 +23,10 @@ export const start = async (ctx: TelegramBot.Message) => {
       userId,
       "Привет! Чтобы подписаться на рассылку, выберите группу при помощи команды: /select_group"
     );
+  } else {
+    sendMessage(
+      userId,
+      "Вы уже зарегистрированы в боте. Чтобы подписаться на рассылку, выберите группу при помощи команды: /select_group"
+    );
   }
 };
