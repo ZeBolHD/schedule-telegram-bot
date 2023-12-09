@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model TelegramUser {
   id                    BigInt @id @unique
   first_name             String?
   username              String?
@@ -22,7 +22,7 @@ model User {
 
 model UserWithGroup {
   userId                BigInt
-  user                  User @relation(fields: [userId], references: [id])
+  user                  TelegramUser @relation(fields: [userId], references: [id])
   groupId               Int
   group                 Group @relation(fields: [groupId], references: [id])
 
@@ -42,7 +42,7 @@ model Group {
 
 model UserWithSubscription {
   userId                BigInt
-  user                  User @relation(fields: [userId], references: [id])
+  user                  TelegramUser @relation(fields: [userId], references: [id])
   subscriptionId        Int
   subscription          Subscription @relation(fields: [subscriptionId], references: [id])
 
@@ -59,4 +59,11 @@ model Subscription {
   id                    Int @id @default(autoincrement())
   name                  String
   userWithSubscription  UserWithSubscription[]
+}
+
+model User {
+  id                    Int @id @default(autoincrement())
+  login                 String
+  hashedPassword        String
+  createdAt             DateTime @default(now())
 }

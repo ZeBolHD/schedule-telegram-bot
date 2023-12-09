@@ -1,7 +1,6 @@
 import TelegramBot from "node-telegram-bot-api";
 import { SelectGroupQuery } from "./types";
 import { selectGroupFacultyHandler } from "./selectGroupFacultyHandler";
-import { selectGroupGradeHandler } from "./selectGroupGradeHandler";
 import { selectGroupHandler } from "./selectGroupHandler";
 
 export const selectGroupQueryHandler = (

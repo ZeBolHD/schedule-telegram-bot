@@ -1,7 +1,7 @@
 import TelegramBot from "node-telegram-bot-api";
 import { parseCallbackQueryData } from "../../../libs/parseCallbackQueryData";
 import { deleteUserWithSubscription } from "../../../libs/db/actions";
-import { showSubscriptions } from "../../commands/showSubscriptions";
+import { showSubscriptions } from "../../commands/showSubscriptions.command";
 
 export const deleteSubscriptionHandler = async (
   query: string,

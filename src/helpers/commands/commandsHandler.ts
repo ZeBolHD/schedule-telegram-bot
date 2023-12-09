@@ -1,11 +1,11 @@
 import TelegramBot from "node-telegram-bot-api";
 
-import { start } from "./start";
-import { selectGroup } from "./selectGroup";
-import { showSelectedGroups } from "./showSelectedGroups";
+import { start } from "./start.command";
+import { selectGroup } from "./selectGroup.command";
+import { showSelectedGroups } from "./showSelectedGroups.command";
 import { parseUserData } from "../parseUserData";
 import { sendMessage } from "../../libs/sendMessage";
-import { showSubscriptions } from "./showSubscriptions";
+import { showSubscriptions } from "./showSubscriptions.command";
 
 export const commandHandler = async (ctx: TelegramBot.Message) => {
   const type = ctx.text;

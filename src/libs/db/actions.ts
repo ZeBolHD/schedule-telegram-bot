@@ -1,10 +1,10 @@
 import prisma from "./prismadb";
-import { User } from "../../types";
+import { TelegramUser } from "../../types";
 
-export const createUser = async (user: User) => {
-  const { userId, userFirstName, username } = user;
+export const createUser = async (telegramUser: TelegramUser) => {
+  const { userId, userFirstName, username } = telegramUser;
 
-  await prisma.user.create({
+  await prisma.telegramUser.create({
     data: {
       id: userId,
       first_name: userFirstName,
@@ -14,7 +14,7 @@ export const createUser = async (user: User) => {
 };
 
 export const checkUserInDB = async (userId: number) => {
-  const userInDB = await prisma.user.findUnique({
+  const userInDB = await prisma.telegramUser.findUnique({
     where: {
       id: userId,
     },

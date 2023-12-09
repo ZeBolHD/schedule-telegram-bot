@@ -2,7 +2,6 @@ import TelegramBot from "node-telegram-bot-api";
 
 import { CallbackQuery } from "../../types";
 import { SelectGroupQuery } from "./types";
-import { parseUserData } from "../../../parseUserData";
 import { getGroupsByFacultyIdAndGrade } from "../../../../libs/db/actions";
 import { editMessage } from "../../../../libs/editMessage";
 import { parseCallbackQueryData } from "../../../../libs/parseCallbackQueryData";
