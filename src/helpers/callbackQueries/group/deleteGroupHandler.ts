@@ -14,5 +14,5 @@ export const deleteGroupHandler = async (
 
   await deleteUserWithGroup(userId, groupId);
 
-  showSelectedGroups(ctx, messageId);
+  showSelectedGroups(userId, messageId);
 };

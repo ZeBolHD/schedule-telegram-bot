@@ -2,10 +2,13 @@ import { checkUserInDB, createUser } from "../../libs/db/actions";
 import TelegramBot from "node-telegram-bot-api";
 import { parseUserData } from "../parseUserData";
 import { sendMessage } from "../../libs/botActions/sendMessage";
+import { TelegramUser } from "../../types";
 
-export const start = async (ctx: TelegramBot.Message) => {
-  const { userId, userFirstName, username } = parseUserData(ctx);
-
+export const start = async (
+  userId: string,
+  userFirstName: string,
+  username: string
+) => {
   if (!userId || !userFirstName || !username) {
     return;
   }

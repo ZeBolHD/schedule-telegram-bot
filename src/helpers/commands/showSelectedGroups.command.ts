@@ -6,11 +6,9 @@ import { editMessage } from "../../libs/botActions/editMessage";
 import { CallbackQuery } from "../callbackQueries/types";
 
 export const showSelectedGroups = async (
-  ctx: TelegramBot.Message | TelegramBot.CallbackQuery,
+  userId: string,
   messageId?: number
 ) => {
-  const { userId } = parseUserData(ctx);
-
   const groups = await getAllUserGroups(userId);
 
   const reply_markup = {

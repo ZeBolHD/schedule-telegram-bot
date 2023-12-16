@@ -1,5 +1,3 @@
-import TelegramBot from "node-telegram-bot-api";
-import { parseUserData } from "../parseUserData";
 import { getUserSubscriptionsById } from "../../libs/db/actions";
 import { sendMessage } from "../../libs/botActions/sendMessage";
 import { Subscriptions } from "./types";
@@ -7,11 +5,7 @@ import { Subscription } from "@prisma/client";
 import { CallbackQuery } from "../callbackQueries/types";
 import { editMessage } from "../../libs/botActions/editMessage";
 
-export const showSubscriptions = async (
-  ctx: TelegramBot.Message | TelegramBot.CallbackQuery,
-  messageId?: number
-) => {
-  const { userId } = parseUserData(ctx);
+export const showSubscriptions = async (userId: string, messageId?: number) => {
   const userSubscriptions = await getUserSubscriptionsById(userId);
 
   const checkSubscription = (subscription: Subscription) => {

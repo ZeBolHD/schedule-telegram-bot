@@ -12,5 +12,5 @@ export const selectSubscriptionHandler = async (
 
   await setUserWithSubscription(userId, subscriptionId);
 
-  showSubscriptions(ctx, messageId);
+  showSubscriptions(userId, messageId);
 };

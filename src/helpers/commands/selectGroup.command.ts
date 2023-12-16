@@ -5,9 +5,7 @@ import { sendMessage } from "../../libs/botActions/sendMessage";
 import { CallbackQuery } from "../callbackQueries/types";
 import { SelectGroupQuery } from "../callbackQueries/group/selectGroup/types";
 
-const selectFaculty = async (ctx: TelegramBot.Message) => {
-  const { userId } = parseUserData(ctx);
-
+const selectFaculty = async (userId: string) => {
   const faculties = await getAllFaculties();
   const reply_markup = {
     inline_keyboard: faculties.map((faculty) => [
@@ -21,6 +19,6 @@ const selectFaculty = async (ctx: TelegramBot.Message) => {
   await sendMessage(userId, "Выберите факультет:", reply_markup);
 };
 
-export const selectGroup = async (ctx: TelegramBot.Message) => {
-  await selectFaculty(ctx);
+export const selectGroup = async (userId: string) => {
+  await selectFaculty(userId);
 };

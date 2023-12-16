@@ -12,5 +12,5 @@ export const deleteSubscriptionHandler = async (
 
   await deleteUserWithSubscription(userId, subscriptionId);
 
-  showSubscriptions(ctx, messageId);
+  showSubscriptions(userId, messageId);
 };
