@@ -13,7 +13,7 @@ export const createUser = async (telegramUser: TelegramUser) => {
   });
 };
 
-export const checkUserInDB = async (userId: number) => {
+export const checkUserInDB = async (userId: string) => {
   const userInDB = await prisma.telegramUser.findUnique({
     where: {
       id: userId,
@@ -29,7 +29,7 @@ export const getAllFaculties = async () => {
   return faculties;
 };
 
-export const setUserWithGroup = async (userId: number, groupId: number) => {
+export const setUserWithGroup = async (userId: string, groupId: number) => {
   const userWithGroup = await prisma.userWithGroup.findFirst({
     where: {
       userId: userId,
@@ -69,7 +69,7 @@ export const getGroupById = async (groupId: number) => {
   return group;
 };
 
-export const getAllUserGroups = async (userId: number) => {
+export const getAllUserGroups = async (userId: string) => {
   const userGroups = await prisma.userWithGroup.findMany({
     where: {
       userId: userId,
@@ -90,7 +90,7 @@ export const getAllUserGroups = async (userId: number) => {
   }));
 };
 
-export const deleteUserWithGroup = async (userId: number, groupId: number) => {
+export const deleteUserWithGroup = async (userId: string, groupId: number) => {
   await prisma.userWithGroup.deleteMany({
     where: {
       userId: userId,
@@ -131,7 +131,7 @@ export const getGroupsByFacultyIdAndGrade = async (
   return groups;
 };
 
-export const getUserSubscriptionsById = async (userId: number) => {
+export const getUserSubscriptionsById = async (userId: string) => {
   const userWithSubscriptions = await prisma.userWithSubscription.findMany({
     where: {
       userId: userId,
@@ -154,7 +154,7 @@ export const getUserSubscriptionsById = async (userId: number) => {
 };
 
 export const setUserWithSubscription = async (
-  userId: number,
+  userId: string,
   subscriptionId: number
 ) => {
   const userWithSubscription = await prisma.userWithSubscription.findFirst({
@@ -186,7 +186,7 @@ export const setUserWithSubscription = async (
 };
 
 export const deleteUserWithSubscription = async (
-  userId: number,
+  userId: string,
   subscriptionId: number
 ) => {
   await prisma.userWithSubscription.deleteMany({

@@ -1,5 +1,5 @@
 export type TelegramUser = {
-  userId: number;
+  userId: string;
   userFirstName: string | null;
   username: string | null;
 };

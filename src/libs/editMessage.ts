@@ -2,7 +2,7 @@ import TelegramBot from "node-telegram-bot-api";
 import { bot } from "..";
 
 export const editMessage = async (
-  userId: number,
+  userId: string,
   text: string,
   messageId: number,
   reply_markup?: TelegramBot.InlineKeyboardMarkup
