@@ -4,7 +4,7 @@ import { start } from "./start.command";
 import { selectGroup } from "./selectGroup.command";
 import { showSelectedGroups } from "./showSelectedGroups.command";
 import { parseUserData } from "../parseUserData";
-import { sendMessage } from "../../libs/sendMessage";
+import { sendMessage } from "../../libs/botActions/sendMessage";
 import { showSubscriptions } from "./showSubscriptions.command";
 
 export const commandHandler = async (ctx: TelegramBot.Message) => {

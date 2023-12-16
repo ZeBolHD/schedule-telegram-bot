@@ -3,7 +3,7 @@ import { parseUserData } from "../../parseUserData";
 import { deleteUserWithGroup } from "../../../libs/db/actions";
 
 import { showSelectedGroups } from "../../commands/showSelectedGroups.command";
-import { parseCallbackQueryData } from "../../../libs/parseCallbackQueryData";
+import { parseCallbackQueryData } from "../../parseCallbackQueryData";
 
 export const deleteGroupHandler = async (
   query: string,

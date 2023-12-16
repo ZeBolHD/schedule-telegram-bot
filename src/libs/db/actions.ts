@@ -196,3 +196,17 @@ export const deleteUserWithSubscription = async (
     },
   });
 };
+
+export const getFileIdsByGroupId = async (groupIds: number[]) => {
+  const group = await prisma.group.findMany({
+    where: {
+      id: {
+        in: groupIds,
+      },
+    },
+  });
+
+  const fileIds = group.map((group) => group.fileId);
+
+  return fileIds;
+};

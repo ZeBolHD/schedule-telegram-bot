@@ -1,7 +1,7 @@
 import TelegramBot from "node-telegram-bot-api";
 import { parseUserData } from "../parseUserData";
 import { getAllFaculties } from "../../libs/db/actions";
-import { sendMessage } from "../../libs/sendMessage";
+import { sendMessage } from "../../libs/botActions/sendMessage";
 import { CallbackQuery } from "../callbackQueries/types";
 import { SelectGroupQuery } from "../callbackQueries/group/selectGroup/types";
 

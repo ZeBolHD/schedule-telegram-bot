@@ -3,9 +3,9 @@ import TelegramBot from "node-telegram-bot-api";
 import { CallbackQuery } from "../../types";
 import { SelectGroupQuery } from "./types";
 import { getGradesByFacultyId } from "../../../../libs/db/actions";
-import { editMessage } from "../../../../libs/editMessage";
+import { editMessage } from "../../../../libs/botActions/editMessage";
 import { selectGroupGradeHandler } from "./selectGroupGradeHandler";
-import { parseCallbackQueryData } from "../../../../libs/parseCallbackQueryData";
+import { parseCallbackQueryData } from "../../../parseCallbackQueryData";
 
 export const selectGroupFacultyHandler = async (
   query: string[],

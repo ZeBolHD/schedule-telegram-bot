@@ -1,5 +1,5 @@
 import TelegramBot from "node-telegram-bot-api";
-import { bot } from "..";
+import { bot } from "../..";
 
 export const sendMessage = async (
   userId: string,

@@ -1,5 +1,5 @@
 import TelegramBot from "node-telegram-bot-api";
-import { parseCallbackQueryData } from "../../../libs/parseCallbackQueryData";
+import { parseCallbackQueryData } from "../../parseCallbackQueryData";
 import { setUserWithSubscription } from "../../../libs/db/actions";
 import { showSubscriptions } from "../../commands/showSubscriptions.command";
 
