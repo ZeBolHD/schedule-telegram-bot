@@ -6,6 +6,8 @@ import { showSelectedGroups } from "./showSelectedGroups.command";
 import { parseUserData } from "../parseUserData";
 import { sendMessage } from "../../libs/botActions/sendMessage";
 import { showSubscriptions } from "./showSubscriptions.command";
+import { sendScheduleToUser } from "../sendScheduleToUser";
+import { getSchedule } from "./getSchedule.command";
 
 export const commandHandler = async (ctx: TelegramBot.Message) => {
   const type = ctx.text;
@@ -26,6 +28,10 @@ export const commandHandler = async (ctx: TelegramBot.Message) => {
 
     case "/my_subscriptions":
       showSubscriptions(ctx);
+      break;
+
+    case "/get_schedule":
+      getSchedule(ctx);
       break;
 
     default:

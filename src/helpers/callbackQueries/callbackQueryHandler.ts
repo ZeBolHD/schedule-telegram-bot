@@ -14,8 +14,6 @@ export const callbackQueryHandler = async (ctx: TelegramBot.CallbackQuery) => {
 
   query.shift();
 
-  console.log(type);
-
   switch (type) {
     case CallbackQuery.SELECT_GROUP: {
       selectGroupQueryHandler(query, ctx);
