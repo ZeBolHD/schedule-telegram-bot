@@ -11,8 +11,8 @@ datasource db {
 }
 
 model TelegramUser {
-  id                    BigInt @id @unique
-  first_name             String?
+  id                    String @id @unique
+  first_name            String?
   username              String?
   createdAt             DateTime @default(now())
 
@@ -21,7 +21,7 @@ model TelegramUser {
 }
 
 model UserWithGroup {
-  userId                BigInt
+  userId                String
   user                  TelegramUser @relation(fields: [userId], references: [id])
   groupId               Int
   group                 Group @relation(fields: [groupId], references: [id])
@@ -31,17 +31,18 @@ model UserWithGroup {
 
 model Group {
   id                    Int @id @default(autoincrement()) @unique
-  code                  String
+  code                  String @unique
   facultyId             Int
   faculty               Faculty @relation(fields: [facultyId], references: [id])
   grade                 Int @default(1)
   studyType             Int @default(0)
+  fileId                String?
   
   userWithGroup         UserWithGroup[]
 }
 
 model UserWithSubscription {
-  userId                BigInt
+  userId                String
   user                  TelegramUser @relation(fields: [userId], references: [id])
   subscriptionId        Int
   subscription          Subscription @relation(fields: [subscriptionId], references: [id])
@@ -62,8 +63,8 @@ model Subscription {
 }
 
 model User {
-  id                    Int @id @default(autoincrement())
-  login                 String
+  id                    String @id @default(cuid())
+  name                  String @unique
   hashedPassword        String
   createdAt             DateTime @default(now())
 }
