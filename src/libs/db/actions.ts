@@ -83,11 +83,14 @@ export const getAllUserGroups = async (userId: string) => {
     },
   });
 
-  return userGroups.map(({ group }) => ({
+  const groups = userGroups.map(({ group }) => ({
     id: group.id,
     code: group.code,
     faculty: group.faculty.name,
+    fileId: group.fileId,
   }));
+
+  return groups;
 };
 
 export const deleteUserWithGroup = async (userId: string, groupId: number) => {
@@ -195,18 +198,4 @@ export const deleteUserWithSubscription = async (
       subscriptionId: subscriptionId,
     },
   });
-};
-
-export const getFileIdsByGroupId = async (groupIds: number[]) => {
-  const group = await prisma.group.findMany({
-    where: {
-      id: {
-        in: groupIds,
-      },
-    },
-  });
-
-  const fileIds = group.map((group) => group.fileId);
-
-  return fileIds;
 };

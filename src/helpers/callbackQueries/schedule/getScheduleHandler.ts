@@ -1,11 +1,5 @@
 import TelegramBot from "node-telegram-bot-api";
 import { parseCallbackQueryData } from "../../parseCallbackQueryData";
-import {
-  getAllUserGroups,
-  getFileIdsByGroupId,
-} from "../../../libs/db/actions";
-import { sendDocument } from "../../../libs/botActions/sendDocument";
-import { sendMessage } from "../../../libs/botActions/sendMessage";
 import { deleteMessage } from "../../../libs/botActions/deleteMessage";
 import { sendScheduleToUser } from "../../sendScheduleToUser";
 

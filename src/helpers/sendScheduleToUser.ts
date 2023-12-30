@@ -1,12 +1,9 @@
 import { sendDocument } from "../libs/botActions/sendDocument";
 import { sendMessage } from "../libs/botActions/sendMessage";
-import { getAllUserGroups, getFileIdsByGroupId } from "../libs/db/actions";
+import { getAllUserGroups } from "../libs/db/actions";
 
 export const sendScheduleToUser = async (userId: string) => {
   const groups = await getAllUserGroups(userId);
-  const groupIds = groups.map((group) => group.id);
-
-  const fileIds = await getFileIdsByGroupId(groupIds);
 
   if (groups.length === 0) {
     sendMessage(
@@ -16,16 +13,16 @@ export const sendScheduleToUser = async (userId: string) => {
     return;
   }
 
-  for (let i = 0; i < groups.length; i++) {
-    if (fileIds[i] === null) {
-      await sendMessage(
-        userId,
-        `Расписание группы ${groups[i].code} отсутствует`
-      );
+  for (const group of groups) {
+    const fileId = group.fileId;
+    const code = group.code;
+
+    if (fileId === null) {
+      await sendMessage(userId, `Расписание группы ${code} отсутствует`);
       continue;
     }
 
-    const caption = `Расписание группы ${groups[i].code}`;
-    await sendDocument(userId, fileIds[i], caption);
+    const caption = `Расписание группы ${code}`;
+    await sendDocument(userId, fileId, caption);
   }
 };
