@@ -1,3 +1,10 @@
-node_modules/*
-build/*
+node_modules/
 .env
+
+#Docker
+*.yml
+Dockerfile
+.dockerignore
+
+#Makefile
+Makefile
