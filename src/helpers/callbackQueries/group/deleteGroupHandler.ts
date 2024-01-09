@@ -1,5 +1,4 @@
 import TelegramBot from "node-telegram-bot-api";
-import { parseUserData } from "../../parseUserData";
 import { deleteUserWithGroup } from "../../../libs/db/actions";
 
 import { showSelectedGroups } from "../../commands/showSelectedGroups.command";

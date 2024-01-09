@@ -1,4 +1,4 @@
-import { Subscription } from "@prisma/client";
+import { Subscription } from "../../types";
 
 export const Subscriptions: Subscription[] = [
   {

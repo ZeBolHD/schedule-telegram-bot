@@ -1,7 +1,5 @@
 import { getAllUserGroups } from "../../libs/db/actions";
 import { sendMessage } from "../../libs/botActions/sendMessage";
-import TelegramBot from "node-telegram-bot-api";
-import { parseUserData } from "../parseUserData";
 import { editMessage } from "../../libs/botActions/editMessage";
 import { CallbackQuery } from "../callbackQueries/types";
 
