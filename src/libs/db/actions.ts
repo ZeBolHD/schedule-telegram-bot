@@ -134,23 +134,18 @@ export const getGroupsByFacultyIdAndGrade = async (
   return groups;
 };
 
-export const getUserSubscriptionsById = async (userId: string) => {
+export const getUserSubscriptionsIdsById = async (userId: string) => {
   const userWithSubscriptions = await prisma.userWithSubscription.findMany({
     where: {
       userId: userId,
     },
     select: {
-      subscription: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
+      subscriptionId: true,
     },
   });
 
   const subscriptions = userWithSubscriptions.map(
-    (userWithSubscription) => userWithSubscription.subscription
+    (userWithSubscription) => userWithSubscription.subscriptionId
   );
 
   return subscriptions;
@@ -160,32 +155,14 @@ export const setUserWithSubscription = async (
   userId: string,
   subscriptionId: number
 ) => {
-  const userWithSubscription = await prisma.userWithSubscription.findFirst({
-    where: {
-      userId: userId,
-      subscriptionId: subscriptionId,
-    },
-    include: {
-      subscription: true,
-    },
-  });
-
-  if (userWithSubscription) {
-    const { subscription } = userWithSubscription;
-    return subscription;
-  }
-
-  const { subscription } = await prisma.userWithSubscription.create({
+  const userWithSubscription = await prisma.userWithSubscription.create({
     data: {
       userId,
       subscriptionId,
     },
-    include: {
-      subscription: true,
-    },
   });
 
-  return subscription;
+  return userWithSubscription;
 };
 
 export const deleteUserWithSubscription = async (
