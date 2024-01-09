@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -24,7 +21,7 @@ model UserWithGroup {
   userId                String
   user                  TelegramUser @relation(fields: [userId], references: [id])
   groupId               Int
-  group                 Group @relation(fields: [groupId], references: [id])
+  group                 Group @relation(fields: [groupId], references: [id], onDelete: Cascade) 
 
   @@id([userId, groupId])
 }
@@ -43,9 +40,8 @@ model Group {
 
 model UserWithSubscription {
   userId                String
-  user                  TelegramUser @relation(fields: [userId], references: [id])
-  subscriptionId        Int
-  subscription          Subscription @relation(fields: [subscriptionId], references: [id])
+  user                  TelegramUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscriptionId        Int 
 
   @@id([userId, subscriptionId])
 }
@@ -54,12 +50,6 @@ model Faculty {
   id                    Int @id @default(autoincrement())
   name                  String
   groups                Group[]
-}
-
-model Subscription {
-  id                    Int @id @default(autoincrement())
-  name                  String
-  userWithSubscription  UserWithSubscription[]
 }
 
 model User {
