@@ -2,6 +2,7 @@ import TelegramBot from "node-telegram-bot-api";
 import { setUserWithGroup } from "../../../../libs/db/actions";
 import { editMessage } from "../../../../libs/botActions/editMessage";
 import { parseCallbackQueryData } from "../../../parseCallbackQueryData";
+import { sendMessage } from "../../../../libs/botActions/sendMessage";
 
 export const selectGroupHandler = async (
   groupId: number,
@@ -9,7 +10,10 @@ export const selectGroupHandler = async (
 ) => {
   const { userId, messageId } = parseCallbackQueryData(ctx);
 
-  const group = await setUserWithGroup(userId, groupId);
-
-  editMessage(userId, `Вы выбрали группу: ${group.code}`, messageId);
+  try {
+    const group = await setUserWithGroup(userId, groupId);
+    editMessage(userId, `Вы выбрали группу: ${group.code}`, messageId);
+  } catch (e) {
+    sendMessage(userId, "Что-то пошло не так");
+  }
 };

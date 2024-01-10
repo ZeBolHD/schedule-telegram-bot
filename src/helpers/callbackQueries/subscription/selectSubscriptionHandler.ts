@@ -2,6 +2,7 @@ import TelegramBot from "node-telegram-bot-api";
 import { parseCallbackQueryData } from "../../parseCallbackQueryData";
 import { setUserWithSubscription } from "../../../libs/db/actions";
 import { showSubscriptions } from "../../commands/showSubscriptions.command";
+import { sendMessage } from "../../../libs/botActions/sendMessage";
 
 export const selectSubscriptionHandler = async (
   query: string,
@@ -10,7 +11,11 @@ export const selectSubscriptionHandler = async (
   const subscriptionId = Number(query);
   const { userId, messageId } = parseCallbackQueryData(ctx);
 
-  await setUserWithSubscription(userId, subscriptionId);
+  try {
+    await setUserWithSubscription(userId, subscriptionId);
 
-  showSubscriptions(userId, messageId);
+    showSubscriptions(userId, messageId);
+  } catch (e) {
+    sendMessage(userId, "Что-то пошло не так");
+  }
 };

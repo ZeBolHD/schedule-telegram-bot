@@ -3,6 +3,7 @@ import { deleteUserWithGroup } from "../../../libs/db/actions";
 
 import { showSelectedGroups } from "../../commands/showSelectedGroups.command";
 import { parseCallbackQueryData } from "../../parseCallbackQueryData";
+import { sendMessage } from "../../../libs/botActions/sendMessage";
 
 export const deleteGroupHandler = async (
   query: string,
@@ -11,7 +12,10 @@ export const deleteGroupHandler = async (
   const groupId = Number(query);
   const { userId, messageId } = parseCallbackQueryData(ctx);
 
-  await deleteUserWithGroup(userId, groupId);
-
-  showSelectedGroups(userId, messageId);
+  try {
+    await deleteUserWithGroup(userId, groupId);
+    showSelectedGroups(userId, messageId);
+  } catch (e) {
+    sendMessage(userId, "Что-то пошло не так");
+  }
 };
