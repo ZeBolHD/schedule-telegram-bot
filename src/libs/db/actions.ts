@@ -7,8 +7,8 @@ export const createUser = async (telegramUser: TelegramUser) => {
   await prisma.telegramUser.create({
     data: {
       id: userId,
-      first_name: userFirstName,
-      username: username,
+      first_name: userFirstName ? userFirstName : null,
+      username: username ? username : null,
     },
   });
 };
