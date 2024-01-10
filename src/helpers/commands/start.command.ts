@@ -6,7 +6,7 @@ export const start = async (
   userFirstName: string,
   username: string
 ) => {
-  if (!userId || !userFirstName || !username) {
+  if (!userId) {
     return;
   }
 
